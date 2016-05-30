@@ -772,6 +772,13 @@ void UIDisplay::printRow(uint8_t r,char *txt,char *txt2,uint8_t changeAtCol)
 
 void initializeLCD()
 {
+#ifdef LCD_RESET_PIN
+  pinMode(LCD_RESET_PIN, OUTPUT);
+  digitalWrite(LCD_RESET_PIN, 0);
+  _delay_ms(1);
+  digitalWrite(LCD_RESET_PIN, 1);
+  _delay_ms(1);
+#endif
 #ifdef U8GLIB_ST7920
     u8g_InitSPI(&u8g,&u8g_dev_st7920_128x64_sw_spi,  UI_DISPLAY_D4_PIN, UI_DISPLAY_ENABLE_PIN, UI_DISPLAY_RS_PIN, U8G_PIN_NONE, U8G_PIN_NONE);
 #endif
@@ -783,6 +790,9 @@ void initializeLCD()
 #endif
 #ifdef U8GLIB_SH1106_SW_SPI
 	u8g_InitSPI(&u8g,&u8g_dev_sh1106_128x64_sw_spi,  UI_DISPLAY_D4_PIN, UI_DISPLAY_ENABLE_PIN, UI_DISPLAY_RS_PIN, U8G_PIN_NONE, U8G_PIN_NONE);
+#endif
+#ifdef U8GLIB_SSD1309_I2C
+    u8g_InitI2C(&u8g,&u8g_dev_ssd1309_128x64_i2c,U8G_I2C_OPT_NONE);
 #endif
 #ifdef U8GLIB_KS0108_FAST
     u8g_Init8Bit(&u8g,&u8g_dev_ks0108_128x64_fast,UI_DISPLAY_D0_PIN,UI_DISPLAY_D1_PIN,UI_DISPLAY_D2_PIN,UI_DISPLAY_D3_PIN,UI_DISPLAY_D4_PIN,UI_DISPLAY_D5_PIN,UI_DISPLAY_D6_PIN,UI_DISPLAY_D7_PIN,UI_DISPLAY_ENABLE_PIN,UI_DISPLAY_CS1,UI_DISPLAY_CS2,
@@ -3661,7 +3671,7 @@ void UIDisplay::slowAction(bool allowMoves)
 #endif
         uint16_t nextAction = 0;
         uiCheckSlowKeys(nextAction);
-#ifdef HAS_USER_KEYS        
+#ifdef HAS_USER_KEYS
         ui_check_Ukeys(nextAction);
 #endif
         if(lastButtonAction != nextAction)
@@ -3834,4 +3844,3 @@ const int8_t encoder_table[16] PROGMEM = {0,0,0,0,0,0,0,0,0,0,0,-1,0,0,1,0}; // 
 #endif
 #endif
 #endif
-
