@@ -1,10 +1,10 @@
 
 /*
-  Makers Tool Works RGB LED I2C control
-  I2C Device ID = 21
+  Ulticontroller 2 LED I2C control
+  I2C Device ID = 0x03
 
-  Repetier-Firmware port/rewrite by exuvo 2015-05-17
-  Contributed to UM2 by OhmEye October 2014
+  Repetier-Firmware port/rewrite by Lars Karlslund June 2016
+  Contributed to Repetier by Lars Karlslund June 2016
   */
 
 // option switches
@@ -13,12 +13,12 @@
 #define UM2LED_endstoptimer 3                   // how many seconds to display endstop status
 
 // patterns                 R   G   B
-#define UM2led_ready        0, 30,  0    // Printer Ready
+#define UM2led_ready        0, 20, 20    // Printer Ready
 #define UM2led_startup     30, 30, 30    // Printer startup
 #define UM2led_temphit     40, 40, 40    // Hotend is at target temp
 #define UM2led_templow     40,  0, 40    // Hotend heater is slightly lower than target temp
 #define UM2led_temphigh    40,  0,  0    // Hotend heater is slightly higher than target temp
-#define UM2led_heateroff    0,  0, 40    // Hotend heater is off but still hot
+#define UM2led_heateroff    0,  0, 50    // Hotend heater is off but still hot
 #define UM2led_heating0     0,  0, 50    // Hotend heating up <10%
 #define UM2led_heating1     0,  0,100    // Hotend heating up <20%
 #define UM2led_heating2     0, 50,100    // Hotend heating up <30%
